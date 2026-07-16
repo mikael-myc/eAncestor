@@ -6,14 +6,29 @@
     </head>
     <body>
         <div id="main">
-            <span id="an">👤</span>
-            <input type="text" id="n" placeholder="Name of your ancestor here ...">
+            <ul>
+                <li><span id="an">👤</span></li>
+                <li><input type="text" id="n" placeholder="Name of your ancestor here ..."></li>
+                <li><input id="speed" type="range" min="-10" max="10" step="any" value="1"></li>
+            </ul>
         </div>
-        <input id="speed" type="range" min="-10" max="10" step="any" value="1">
     </body>
     <style>
+        :root{
+            --an-width: min(50vw, 50vh);
+        }
         #an {
-            font-size: 80px;
+            font-size: var(--an-width);
+        }
+        ul {
+            list-style: none;
+            text-align: center;
+        }
+        #speed {
+            margin-top: 10px;
+        }
+        #n, #speed {
+            width: var(--an-width);
         }
     </style>
     <script>
@@ -24,8 +39,14 @@
 
         let deg = 0;
         setInterval(() => {
+            console.log(deg);
             mainDiv.style.transform = `rotate(${deg}deg)`;
-            deg += speedInputRange.value;
+            deg += parseFloat(speedInputRange.value);
+            if (deg > 360){
+                deg -= 360;
+            } else if (deg < -360){
+                deg += 360;
+            }
         }, 100);
     </script>
 </html>
